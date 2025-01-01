@@ -5,7 +5,7 @@ from notion_utils import fetch_data_from_notion, save_to_notion
 
 
 # Admin and Channel Information
-ADMIN_IDS = [5943119285, 6150091802]
+ADMIN_IDS = [5943119285, 6150091802,7222712791]
 CHANNEL_ID = -1002469822258
 
 #@app.on_message(filters.command("start"))

@@ -1,9 +1,25 @@
+import time
 from pyrogram.types import InlineQueryResultCachedDocument, InlineQueryResultArticle, InputTextMessageContent
-from notion_utils import fetch_data_from_notion
 
+# Cache initialization
+cache_data = {
+    "data": None,
+    "timestamp": 0
+}
 async def inline_query_handler(client, query):
-    # Fetch data from Notion Database
-    movies = fetch_data_from_notion()
+    global cache_data
+
+    # Check if the cache is valid (within 1 minute)
+    current_time = time.time()
+    if cache_data["data"] and (current_time - cache_data["timestamp"] < 60):
+        # Use cached data if it's within the 1 minute time window
+        movies = cache_data["data"]
+    else:
+        # Fetch new data from Notion
+        movies = fetch_data_from_notion()
+        cache_data["data"] = movies
+        cache_data["timestamp"] = current_time
+
     results = []
     query_text = query.query.lower().strip()
 

@@ -1,6 +1,6 @@
 import time
 from pyrogram.types import InlineQueryResultCachedDocument, InlineQueryResultArticle, InputTextMessageContent
-
+from notion_utils import fetch_data_from_notion
 # Cache initialization
 cache_data = {
     "data": None,

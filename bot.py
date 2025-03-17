@@ -70,9 +70,12 @@ def run_bot2():
 if __name__ == "__main__":
     flask_thread = threading.Thread(target=run_flask)
     flask_thread.start()
+
+    bot1_thread = threading.Thread(target=run_bot)
+    bot1_thread.start()
+
     bot2_thread = threading.Thread(target=run_bot2)
     bot2_thread.start()
-    run_bot()  # This will run the bot after Flask starts
 
 ######
 #####
@@ -199,4 +202,3 @@ Your mission is to develop scalable, efficient, and intelligent automation solut
     else:
         return f"Error: {response.status_code}, {response.text}"
 
-app.run()

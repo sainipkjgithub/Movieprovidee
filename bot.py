@@ -56,27 +56,8 @@ app.on_message(filters.document | filters.video)(handle_upload)
 app.on_inline_query()(inline_query_handler)  # Register inline query handler
 
 # Function to run Flask app
-def run_flask():
-    flask_app.run(host="0.0.0.0", port=5000)
 
-# Function to run Pyrogram bot
-def run_bot():
-    print("Bot is running...")
-    app.run()
-def run_bot2():
-    print("Bot is running...")
-    app2.run()
 # Running Flask and Pyrogram bot concurrently using threads
-if __name__ == "__main__":
-    flask_thread = threading.Thread(target=run_flask)
-    flask_thread.start()
-
-    bot1_thread = threading.Thread(target=run_bot)
-    bot1_thread.start()
-
-    bot2_thread = threading.Thread(target=run_bot2)
-    bot2_thread.start()
-
 ######
 #####
 ####
@@ -201,4 +182,27 @@ Your mission is to develop scalable, efficient, and intelligent automation solut
         return assistant_msg
     else:
         return f"Error: {response.status_code}, {response.text}"
+        
+        
+def run_flask():
+    flask_app.run(host="0.0.0.0", port=5000)
 
+# Function to run Pyrogram bot
+def run_bot():
+    print("Bot is running...")
+    app.run()
+def run_bot2():
+    print("Bot is running...")
+    app2.run()
+    
+if __name__ == "__main__":
+    flask_thread = threading.Thread(target=run_flask, daemon=True)
+    bot1_thread = threading.Thread(target=run_bot, daemon=True)
+    bot2_thread = threading.Thread(target=run_bot2, daemon=True)
+
+    flask_thread.start()
+    bot1_thread.start()
+    bot2_thread.start()
+
+    bot1_thread.join()
+    bot2_thread.join()

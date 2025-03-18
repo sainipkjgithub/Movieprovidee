@@ -5,64 +5,34 @@ from ReplyMarckep import download_any_video,available_boards,help_keyboard
 import requests
 import time
 from flask import Flask
-
-from handlers import start, about_inline, close_inline, handle_upload
-from inline_handlers import inline_query_handler  # Import inline query handler
 from dotenv import load_dotenv
 import os
 import threading
 
-# बॉट के लिए API क्रेडेंशियल्स
-API_ID2 = 24673538
-API_HASH2 = "555639745e6ceee1ae3797866136998f"
-BOT_TOKEN2 = "7868467316:AAFa2MOEJDtqHDRFR7feb8z2fWZizQU5B1U"
-user_status = {}
-user_histories = {}
-# Pyrogram बॉट क्लाइंट सेटअप
-app2 = Client(
-    "my_bot",
-    api_id=API_ID2,
-    api_hash=API_HASH2,
-    bot_token=BOT_TOKEN2
-)
-
-
-#####
-###
-###
-# Load environment variables
 load_dotenv()
 
-# Bot Credentials
-API_ID = int(os.getenv("API_ID"))
-API_HASH = os.getenv("API_HASH")
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-
-# Initialize Flask app
 flask_app = Flask(__name__)
 
 @flask_app.route('/')
 def home():
-    return "Movie Bot And All in one Bot is running."
+    return "All in one Bot is running."
 
-# Initialize Pyrogram Client
-app = Client("inline-file-search-bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+# बॉट के लिए API क्रेडेंशियल्स
+API_ID = int(os.getenv("API_ID"))
+API_HASH = os.getenv("API_HASH")
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+user_status = {}
+user_histories = {}
+# Pyrogram बॉट क्लाइंट सेटअप
+app = Client(
+    "my_bot",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=BOT_TOKEN
+)
 
-# Register Handlers
-app.on_message(filters.command("start"))(start)
-app.on_callback_query(filters.regex("about_inline"))(about_inline)
-app.on_callback_query(filters.regex("close_inline"))(close_inline)
-app.on_message(filters.document | filters.video)(handle_upload)
-app.on_inline_query()(inline_query_handler)  # Register inline query handler
-
-# Function to run Flask app
-
-# Running Flask and Pyrogram bot concurrently using threads
-######
-#####
-####
          
-@app2.on_message(filters.command("start"))
+@app.on_message(filters.command("start"))
 def start(client, message):
     # इनलाइन कीबोर्ड बटन बनाएं
     message.reply_text(
@@ -70,14 +40,14 @@ def start(client, message):
         reply_markup=home_keyboard
     )
     
-@app2.on_message(filters.command("help"))
+@app.on_message(filters.command("help"))
 def start(client, message):
     # इनलाइन कीबोर्ड बटन बनाएं
     message.reply_text(
         startmsg,
         reply_markup=help_keyboard
     )
-@app2.on_callback_query()
+@app.on_callback_query()
 def callback_query(client, query: CallbackQuery):
     user_id = query.from_user.id  # Get user ID
     user_name = query.from_user.first_name  # Extract user name
@@ -100,7 +70,7 @@ def callback_query(client, query: CallbackQuery):
         query.message.edit_text(CALLBACK123[query.data])
     else:
         query.message.edit_text("No Data Found For Your Clicked Button. Please Contact to Admin to Support",reply_markup=wrongbutton)
-@app2.on_message(
+@app.on_message(
     filters.text &  # सिर्फ टेक्स्ट मैसेज
     ~filters.me &   # बॉट के अपने मैसेज को इग्नोर करे
     ~filters.group & # ग्रुप चैट्स को इग्नोर करे
@@ -182,8 +152,7 @@ Your mission is to develop scalable, efficient, and intelligent automation solut
         return assistant_msg
     else:
         return f"Error: {response.status_code}, {response.text}"
-        
-        
+
 def run_flask():
     flask_app.run(host="0.0.0.0", port=5000)
 
@@ -191,18 +160,9 @@ def run_flask():
 def run_bot():
     print("Bot is running...")
     app.run()
-def run_bot2():
-    print("Bot is running...")
-    app2.run()
-    
+
+# Running Flask and Pyrogram bot concurrently using threads
 if __name__ == "__main__":
-    flask_thread = threading.Thread(target=run_flask, daemon=True)
-    bot1_thread = threading.Thread(target=run_bot, daemon=True)
-    bot2_thread = threading.Thread(target=run_bot2, daemon=True)
-
+    flask_thread = threading.Thread(target=run_flask)
     flask_thread.start()
-    bot1_thread.start()
-    bot2_thread.start()
-
-    bot1_thread.join()
-    bot2_thread.join()
+    run_bot()  # This will run the bot after Flask starts

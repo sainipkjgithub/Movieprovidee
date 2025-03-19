@@ -12,6 +12,8 @@ home_keyboard = InlineKeyboardMarkup([
         InlineKeyboardButton("ℹ️ About Us", callback_data="about_us")]
          
     ])
+cancel12 = InlineKeyboardMarkup([
+        [InlineKeyboardButton("🚫Cancel", callback_data="cancel")]])
 help_keyboard =  ReplyKeyboardMarkup(
     [[KeyboardButton("Option 1"), KeyboardButton("Option 2")]],
     resize_keyboard=True
@@ -37,6 +39,10 @@ getHelp = InlineKeyboardMarkup([
          InlineKeyboardButton("📞 Contact Admin", url="https://t.me/aks7240")],
          [InlineKeyboardButton("🏠Home", callback_data="home")]
          ])
+chat_with_assistant = ReplyKeyboardMarkup(
+    [[KeyboardButton("🚫CANCEL")]],
+    resize_keyboard=True
+)
 earnMoney = InlineKeyboardMarkup([
          [InlineKeyboardButton("🌍 Our Website", url="https://mrsingodiya.ct.ws/"),
          InlineKeyboardButton("📢 Follow us on Social", callback_data="follow_us2")],
@@ -75,7 +81,7 @@ aboutUs = InlineKeyboardMarkup([
          [InlineKeyboardButton("💰 Earn Money", callback_data="earn_money")],
         [InlineKeyboardButton("❓ Gelp", callback_data="get_help"),
         InlineKeyboardButton("ℹ️ About", callback_data="about_us")],
-        [InlineKeyboardButton("🏠Home", callback_data="home_keyboard")],
+        [InlineKeyboardButton("🏠Home", callback_data="home")],
          
     ])
     
@@ -162,8 +168,8 @@ competition_exam = InlineKeyboardMarkup([
     InlineKeyboardButton("🏠 HOME", callback_data="home")]
 ])
 available_boards = InlineKeyboardMarkup([
-        [InlineKeyboardButton("RBSE BOARD", callback_data="rbse_board")],
-        [InlineKeyboardButton("UP BOARD", callback_data="up_board")],
+        [InlineKeyboardButton("RBSE BOARD", callback_data="board_result_rbse")],
+        [InlineKeyboardButton("UP BOARD", callback_data="board_result_up")],
         [InlineKeyboardButton("🔙Back", callback_data="school_education"),
         InlineKeyboardButton("🏠 HOME", callback_data="home")]
     ])

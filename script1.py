@@ -1,5 +1,5 @@
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from ReplyMarckep import home_keyboard, getHelp, earnMoney, aboutUs, wrongbutton, our_telegram_bots1, our_telegram_bots2, our_telegram_bots3, wrong_socialMedia, follow_us, follow_us2,fun,explore_more,college_education, school_education, education, competition_exam, contact_admin
+from ReplyMarckep import home_keyboard, getHelp, earnMoney, aboutUs, wrongbutton, our_telegram_bots1, our_telegram_bots2, our_telegram_bots3, wrong_socialMedia, follow_us, follow_us2,fun,explore_more,college_education, school_education, education, competition_exam, contact_admin, available_boards
 
 startmsg = "Welcome To Singodiya Tech."
 CALLBACK123 = {
@@ -51,7 +51,8 @@ ReplyMarkup123 = {
   "education":education,
   "school_education":school_education,
   "college_education":college_education,
-  "competition_exam":competition_exam
+  "competition_exam":competition_exam,
+  "available_boards" : available_boards
   
   
   }
